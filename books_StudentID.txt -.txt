@@ -1,20 +1,20 @@
-1.
-2.
-3.
-4.
-5.
-6
-7.
-8.
-9.
-10.
-11.
-12.
-13.
-14.
-15.
-16.
-17.
-18.
-19.
-20.
+01. 1530078746045,Sarah Johnson,Sound of Blood,Mystery,2018,20-08-2019,read
+02. 2326837608734,Jess Kidd,Trials of Fire,Fantasy,2019,15-03-2020,to-read
+03. 2594042998282,Martha McPhee,Cosmic Exile,Science Fiction,2022,17-10-2023,read
+04. 5897824353113,Megan Miranda,The Sealed Spider,Mystery,2015,29-01-2017,to-read
+05. 9890821451868,Helen Phillips,Widow of Wolves,Thriller,2017,12-12-2018,read
+06. 4766313645400,Kristin Harmel,Made of Fear,Thriller,2021,03-09-2022,to-read
+07. 8135833746331,Karen Kingsbury,Daughter of Death,Mystery,2021,12-11-2022,to-read
+08. 9589740063635,Rebecca Serle,Wild and Wicked,Romance,2017,28-10-2018,read
+09. 2780845639371,Sally Rooney,State of Silence,Drama,2023,30-05-2023,to-read
+10. 1871205520769,Lisa Jewell,Empire of Bones,Historical Fiction,2018,22-04-2019,to-read
+11. 8188838838691,Kiley Reid,The Owl in the Fog,Mystery,2022,17-11-2023,read
+12. 6168910612128,Haruki Murakami,The Haunted Shack,Horror,2021,13-11-2022,to-read
+13. 2027183588917,John Green,Chosen for Pleasure,Romance,2019,03-12-2020,read
+14. 9037323587254,Stephen King,Threat of Blood,Horror,2022,21-01-2023,read
+15. 7042868323039,Imbolo Mbue,Cloaked Lust,Romance,2019,28-08-2020,to-read
+16. 6909338843023,Mary Kubica,Ascendant Skull,Horror,2017,19-03-2018,read
+17. 9654036090470,Stephen Jones,Trap the Storm,Mystery,2018,13-05-2019,read
+18. 7576531065310,Joan Didion,Winged Clock,Fantasy,2021,29-10-2022,to-read
+19. 8714008194692,Brian Evenson,Primed for Slaughter,Thriller,2018,17-04-2020,read
+20. 7325098586941,Alice Walker,Unseen Hunt,Mystery,2020,11-09-2021,to-read
