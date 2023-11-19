@@ -33,23 +33,28 @@ class BookManagementSystem:
         publisher = input("Enter book publisher: ")
         genre = input("Enter book genre: ")
         year_published = input("Enter year published: ")
-        date_purchased_str = input("Enter date purchased (YYYY-MM-DD): ")
-        date_purchased = datetime.datetime.strptime(date_purchased_str, "%Y-%m-%d")
+        date_purchased_str = input("Enter date purchased (DD-MM-YYYY): ")
+        date_purchased = datetime.datetime.strptime(date_purchased_str, "%d-%m-%Y")
         status = input("Enter book status: ")
         book = Book(isbn, author, title, publisher, genre, year_published, date_purchased, status)
         self.books.append(book)
         self.write_to_file()
         self.clear_screen()
 
-# Create a function called view_books that takes in the following parameters:
+    def __len__(self):
+        return len(self.books)
+
+    # Create a function called view_books that takes in the following parameters:
     def view_books(self):
-       if len(self.books) == 0:
+        print("Numbers of books:", len(self.books) )
+        if len(self.books) == 0:
             print("No books found")
-       else:
+            input("Press Enter to continue...")
+        else:
             for book in self.books:
-                print(f"ISBN: {book.isbn}, Author: {book.author}, Title: {book.title}, Publisher: {book.publisher}, Genre: {book.genre}, Year Published: {book.year_published}, Date Purchased: {book.date_purchased.strftime('%Y-%m-%d')}, Status: {book.status}")
-            input("Press Enter to continue...")  
-            self.clear_screen()  
+                print(f"ISBN: {book.isbn}, Author: {book.author}, Title: {book.title}, Publisher: {book.publisher}, Genre: {book.genre}, Year Published: {book.year_published}, Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, Status: {book.status}")
+            input("Press Enter to continue...")
+            self.clear_screen()
 
 # Create a function called update_book that takes in the following parameters:
     def update_book(self):
@@ -85,7 +90,7 @@ class BookManagementSystem:
     def write_to_file(self):
         with open(self.filename, 'a') as f:  # Use 'a' for append mode
             for book in self.books:
-                f.write(f"{book.isbn},{book.author},{book.title},{book.publisher},{book.genre},{book.year_published},{book.date_purchased.strftime('%Y-%m-%d')},{book.status}\n")
+                f.write(f"{book.isbn},{book.author},{book.title},{book.publisher},{book.genre},{book.year_published},{book.date_purchased.strftime('%d-%m-%Y')},{book.status}\n")
 
 # Create a function called read_from_file that takes in the following parameters:
     def read_from_file(self):
@@ -94,16 +99,18 @@ class BookManagementSystem:
             with open(self.filename, 'r') as f:
                 for line in f:
                     data = line.strip().split(',')
-                    isbn, author, title, publisher, genre, year_published_str, date_purchased_str, status = data
-                    year_published = int(year_published_str)
-                    date_purchased = datetime.datetime.strptime(date_purchased_str, "%Y-%m-%d")
-                    book = Book(isbn, author, title, publisher, genre, year_published, date_purchased, status)
-                    self.books.append(book)
+                    if len(data) == 8:
+                        isbn, author, title, publisher, genre, year_published_str, date_purchased_str, status = data
+                        year_published = int(year_published_str)
+                        date_purchased = datetime.datetime.strptime(date_purchased_str, "%d-%m-%Y")
+                        book = Book(isbn, title, author, publisher, genre, year_published, date_purchased, status)
+                        self.books.append(book)
+                    else:
+                        print(f"Skipping invalid line: {line}")
         except FileNotFoundError:
             print("Error: File not found")
 
-
-# Create a function called clear_screen that takes in the following parameters:
+    # Create a function called clear_screen that takes in the following parameters:
     def clear_screen(self):
         print("\033c", end="")
 
