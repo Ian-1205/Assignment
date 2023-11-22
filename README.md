@@ -2,6 +2,16 @@
 THIS IS A BOOK MANAGEMENT SYSTEM THAT ALLOWS USERS TO ADD, VIEW, UPDATE AND DELETE BOOKS FROM A FILE
 """
 import datetime
+# Create a function to get the write date format of the user's input
+def get_valid_date_input(prompt, format_str):
+    while True:
+        user_input = input(prompt)
+        try:
+            date_obj = datetime.datetime.strptime(user_input, format_str)
+            return date_obj
+        except ValueError:
+            print("Invalid input. Please enter the date in the specified format.")
+Run = True
 
 # Create a Book class with the following attributes:
 class Book:
@@ -25,21 +35,27 @@ class BookManagementSystem:
         self.read_from_file()
 
 
-    # Create a function called add_book that takes in the following parameters:
+# Create a function called add_book that takes in the following parameters:
     def add_book(self):
         isbn = input("Enter book ISBN: ")
         author = input("Enter book author: ")
         title = input("Enter book title: ")
         publisher = input("Enter book publisher: ")
         genre = input("Enter book genre: ")
-        year_published = input("Enter year published: ")
-        date_purchased_str = input("Enter date purchased (DD-MM-YYYY): ")
-        date_purchased = datetime.datetime.strptime(date_purchased_str, "%d-%m-%Y")
+        year_published = get_valid_date_input("Enter year published (DD-MM-YYYY): ", "%d-%m-%Y")
+        date_purchased = get_valid_date_input("Enter date purchased (DD-MM-YYYY): ", "%d-%m-%Y")
         status = input("Enter book status: ")
-        book = Book(isbn, author, title, publisher, genre, year_published, date_purchased, status)
-        self.books.append(book)
-        self.write_to_file()
-        self.clear_screen()
+
+        # Confirmation of the criteria of the user's input
+        if isbn.isdigit() and len(isbn) == 13 and author.isalpha() and genre.isalpha() and status.isalpha():
+            book = Book(isbn, author, title, publisher, genre, year_published, date_purchased, status)
+            books_to_add = [book]
+            self.books.extend(books_to_add)
+            self.write_to_file()
+            self.clear_screen()
+        else:
+            print("There are some invalid inputs, please try again.")
+            Run = True
 
     def __len__(self):
         return len(self.books)
@@ -48,7 +64,7 @@ class BookManagementSystem:
     def view_books(self):
         print("Numbers of books:", len(self.books) )
         if len(self.books) == 0:
-            print("No books found")
+            print("No books found.")
             input("Press Enter to continue...")
         else:
             for book in self.books:
@@ -63,7 +79,12 @@ class BookManagementSystem:
         for book in self.books:
             if book.title == current_book_name and book.author == current_book_author:
                 new_book_name = input("Enter the new name of the book: ")
-                new_book_author = input("Enter the new author of the book: ")
+                while True:
+                    new_book_author = input("Enter the new author of the book: ")
+                    if new_book_author.replace(" ", "").isalpha():
+                        break
+                    else:
+                        print("Invalid input. Please enter the author using only letters.")
                 book.title = new_book_name
                 book.author = new_book_author
                 print("Book updated successfully.")
@@ -114,8 +135,7 @@ class BookManagementSystem:
     def clear_screen(self):
         print("\033", end="")
 
-        
-    ## Function to search for books
+    # Create a function to search for books
 
     def search_books(self):
         isbn = input("Enter book ISBN: ")
@@ -133,10 +153,9 @@ class BookManagementSystem:
         if not books_found:
             print("No books found")
 
-
 # Create an instance of the BookManagementSystem class and call the functions
 bms = BookManagementSystem('books.txt')
-while True:
+while Run:
     print("1. Add book")
     print("2. View books")
     print("3. Delete book")
@@ -153,8 +172,6 @@ while True:
     elif choice == "4":
         bms.update_book()
     elif choice == "5":
-        bms.search_book()
-    elif choice == "6" :
         print("Goodbye!")
         break
     else:
@@ -168,4 +185,3 @@ while True:
         if try_again == "n":
             Run = False
             break
-            
