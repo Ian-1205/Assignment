@@ -86,6 +86,23 @@ class BookManagementSystem:
         print("Book not found")
         self.clear_screen()
 
+## Create a function to search for books that takes in the following parameters:
+
+def search_books(self):
+    isbn= input("Enter book ISBN: ")
+    author= input("Enter book author: ")
+    title= input("Enter book title: ")
+    
+    for book in self.books:
+        if book.isbn==isbn or book.author==author and book.title==title:
+             print(f"ISBN: {book.isbn}, Author: {book.author}, Title: {book.title}, Publisher: {book.publisher}, 
+                    Genre: {book.genre}, Year Published: {book.year_published}, 
+                    Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, Status: {book.status}")
+        else:
+             print("No books found")
+
+
+
 # Create a function called write_to_file that takes in the following parameters:
     def write_to_file(self):
         with open(self.filename, 'a') as f:  # Use 'a' for append mode
@@ -122,7 +139,8 @@ while True:
     print("2. View books")
     print("3. Delete book")
     print("4. Update book")
-    print("5. Exit")
+    print("5. Search book")
+    print("6. Exit")
 
     choice = input("Enter your choice: ")
     if choice == "1":
@@ -134,6 +152,8 @@ while True:
     elif choice == "4":
         bms.update_book()
     elif choice == "5":
+        bms.search_book()
+    elif choice == "6":
         print("Goodbye!")
         break
     else:
