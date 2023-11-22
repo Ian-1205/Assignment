@@ -2,6 +2,7 @@
 THIS IS A BOOK MANAGEMENT SYSTEM THAT ALLOWS USERS TO ADD, VIEW, UPDATE AND DELETE BOOKS FROM A FILE
 """
 import datetime
+import os
 # Create a function to get the write date format of the user's input
 def get_valid_date_input(prompt, format_str):
     while True:
@@ -15,7 +16,7 @@ Run = True
 
 # Create a Book class with the following attributes:
 class Book:
-    def __init__(self, isbn, title, author, publisher, genre, year_published, date_purchased, status):
+    def _init_(self, isbn, title, author, publisher, genre, year_published, date_purchased, status):
         self.title = title
         self.author = author
         self.isbn = isbn
@@ -29,7 +30,7 @@ class Book:
 class BookManagementSystem:
 
     # initializes the following attributes:
-    def __init__(self, filename):
+    def _init_(self, filename):
         self.books = []
         self.filename = filename
         self.read_from_file()
@@ -52,12 +53,12 @@ class BookManagementSystem:
             books_to_add = [book]
             self.books.extend(books_to_add)
             self.write_to_file()
-            self.clear_screen()
+            os.system('cls')
         else:
             print("There are some invalid inputs, please try again.")
             Run = True
 
-    def __len__(self):
+    def _len_(self):
         return len(self.books)
 
     # Create a function called view_books that takes in the following parameters:
@@ -70,7 +71,7 @@ class BookManagementSystem:
             for book in self.books:
                 print(f"ISBN: {book.isbn}, Author: {book.author}, Title: {book.title}, Publisher: {book.publisher}, Genre: {book.genre}, Year Published: {book.year_published}, Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, Status: {book.status}")
             input("Press Enter to continue...")
-            self.clear_screen()
+            os.system('cls')
 
 # Create a function called update_book that takes in the following parameters:
     def update_book(self):
@@ -89,10 +90,10 @@ class BookManagementSystem:
                 book.author = new_book_author
                 print("Book updated successfully.")
                 self.write_to_file()
-                self.clear_screen()
+                os.system('cls')
                 return
         print("Book not found.")
-        self.clear_screen()
+        os.system('cls')
 
 # Create a function called delete_book that takes in the following parameters:
     def delete_book(self):
@@ -102,10 +103,10 @@ class BookManagementSystem:
                 self.books.remove(book)
                 print("Book deleted successfully")
                 self.write_to_file()
-                self.clear_screen()
+                os.system('cls')
                 return
         print("Book not found")
-        self.clear_screen()
+        os.system('cls')
 
 # Create a function called write_to_file that takes in the following parameters:
     def write_to_file(self):
@@ -132,8 +133,8 @@ class BookManagementSystem:
             print("Error: File not found")
 
     # Create a function called clear_screen that takes in the following parameters:
-    def clear_screen(self):
-        print("\033", end="")
+    """def clear_screen(self):
+        print("\033", end="")"""
 
     # Create a function to search for books
 
@@ -184,4 +185,4 @@ while Run:
 
         if try_again == "n":
             Run = False
-            break
+            break
