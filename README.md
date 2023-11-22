@@ -114,6 +114,19 @@ class BookManagementSystem:
     def clear_screen(self):
         print("\033", end="")
 
+        
+    def search_books(self):
+        isbn = input("Enter book ISBN: ")
+        author = input("Enter book author: ")
+        title = input("Enter book title: ")
+            for book in self.books:
+            if book.isbn == isbn and (book.author == author or book.title == title):
+                print(
+                    f"ISBN: {book.isbn}, Author: {book.author}, Title: {book.title}, Publisher: {book.publisher}, Genre: {book.genre}, YearPublished: {book.year_published}, Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, Status: {book.status}")
+
+            else:
+                print("No books found")
+
 
 # Create an instance of the BookManagementSystem class and call the functions
 bms = BookManagementSystem('books.txt')
@@ -134,6 +147,8 @@ while True:
     elif choice == "4":
         bms.update_book()
     elif choice == "5":
+        bms.search_book()
+    elif choice == "6" :
         print("Goodbye!")
         break
     else:
