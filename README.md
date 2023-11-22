@@ -1,8 +1,11 @@
 """
 THIS IS A BOOK MANAGEMENT SYSTEM THAT ALLOWS USERS TO ADD, VIEW, UPDATE AND DELETE BOOKS FROM A FILE
 """
+
 import datetime
 import os
+
+
 # Create a function to get the write date format of the user's input
 def get_valid_date_input(prompt, format_str):
     while True:
@@ -12,11 +15,14 @@ def get_valid_date_input(prompt, format_str):
             return date_obj
         except ValueError:
             print("Invalid input. Please enter the date in the specified format.")
+
+
 Run = True
+
 
 # Create a Book class with the following attributes:
 class Book:
-    def _init_(self, isbn, title, author, publisher, genre, year_published, date_purchased, status):
+    def __init__(self, isbn, title, author, publisher, genre, year_published, date_purchased, status):
         self.title = title
         self.author = author
         self.isbn = isbn
@@ -26,19 +32,25 @@ class Book:
         self.date_purchased = date_purchased
         self.status = status
 
+
 # Create a BookManagementSystem class with the following attributes:
 class BookManagementSystem:
 
     # initializes the following attributes:
-    def _init_(self, filename):
+    def __init__(self, filename):
         self.books = []
         self.filename = filename
         self.read_from_file()
 
-
-# Create a function called add_book that takes in the following parameters:
+    # Create a function called add_book that takes in the following parameters:
     def add_book(self):
-        isbn = input("Enter book ISBN: ")
+        while True:
+            isbn = input("Enter book ISBN: ")
+            if len(isbn) == 13 and isbn.isdigit():
+                break  # Exit the loop if the ISBN is valid
+            else:
+                print("Invalid ISBN. ISBN must be exactly 13 digits and consist only of digits.")
+
         author = input("Enter book author: ")
         title = input("Enter book title: ")
         publisher = input("Enter book publisher: ")
@@ -48,32 +60,43 @@ class BookManagementSystem:
         status = input("Enter book status: ")
 
         # Confirmation of the criteria of the user's input
-        if isbn.isdigit() and len(isbn) == 13 and author.isalpha() and genre.isalpha() and status.isalpha():
+        if isbn.isdigit() and author.isalpha() and genre.isalpha():
             book = Book(isbn, author, title, publisher, genre, year_published, date_purchased, status)
             books_to_add = [book]
             self.books.extend(books_to_add)
             self.write_to_file()
+            print("The book has been successfully added.")
             os.system('cls')
         else:
             print("There are some invalid inputs, please try again.")
-            Run = True
 
-    def _len_(self):
+    Run = True
+
+    def __len__(self):
         return len(self.books)
 
     # Create a function called view_books that takes in the following parameters:
     def view_books(self):
-        print("Numbers of books:", len(self.books) )
+        print("Numbers of books:", len(self.books))
         if len(self.books) == 0:
             print("No books found.")
             input("Press Enter to continue...")
         else:
             for book in self.books:
-                print(f"ISBN: {book.isbn}, Author: {book.author}, Title: {book.title}, Publisher: {book.publisher}, Genre: {book.genre}, Year Published: {book.year_published}, Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, Status: {book.status}")
+                print(
+                    f"ISBN: {book.isbn}, "
+                    f"Author: {book.author}, "
+                    f"Title: {book.title}, "
+                    f"Publisher: {book.publisher}, "
+                    f"Genre: {book.genre}, "
+                    f"Year Published: {book.year_published}, "
+                    f"Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, "
+                    f"Status: {book.status}"
+                )
             input("Press Enter to continue...")
             os.system('cls')
 
-# Create a function called update_book that takes in the following parameters:
+    # Create a function called update_book that takes in the following parameters:
     def update_book(self):
         current_book_name = input("Enter the current name of the book you want to update: ")
         current_book_author = input("Enter the current author of the book you want to update: ")
@@ -95,7 +118,7 @@ class BookManagementSystem:
         print("Book not found.")
         os.system('cls')
 
-# Create a function called delete_book that takes in the following parameters:
+    # Create a function called delete_book that takes in the following parameters:
     def delete_book(self):
         isbn = input("Enter book ISBN to delete: ")
         for book in self.books:
@@ -108,13 +131,17 @@ class BookManagementSystem:
         print("Book not found")
         os.system('cls')
 
-# Create a function called write_to_file that takes in the following parameters:
+    # Create a function called write_to_file that takes in the following parameters:
     def write_to_file(self):
         with open(self.filename, 'w') as f:
             for book in self.books:
-                f.write(f"{book.isbn},{book.author},{book.title},{book.publisher},{book.genre},{book.year_published},{book.date_purchased.strftime('%d-%m-%Y')},{book.status}\n")
+                f.write(
+                    f"{book.isbn},{book.author},{book.title},{book.publisher},"
+                    f"{book.genre},{book.year_published},{book.date_purchased.strftime('%d-%m-%Y')},"
+                    f"{book.status}\n"
+                )
 
-# Create a function called read_from_file that takes in the following parameters:
+    # Create a function called read_from_file that takes in the following parameters:
     def read_from_file(self):
         self.books = []
         try:
@@ -132,10 +159,6 @@ class BookManagementSystem:
         except FileNotFoundError:
             print("Error: File not found")
 
-    # Create a function called clear_screen that takes in the following parameters:
-    """def clear_screen(self):
-        print("\033", end="")"""
-
     # Create a function to search for books
 
     def search_books(self):
@@ -148,33 +171,48 @@ class BookManagementSystem:
         for book in self.books:
             if book.isbn == isbn or (book.author == author and book.title == title):
                 print(
-                    f"ISBN: {book.isbn}, Author: {book.author}, Title: {book.title}, Publisher: {book.publisher}, Genre:{book.genre}, YearPublished: {book.year_published}, Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, Status: {book.status}")
+                    f"ISBN: {book.isbn}, "
+                    f"Author: {book.author}, "
+                    f"Title: {book.title}, "
+                    f"Publisher: {book.publisher}, "
+                    f"Genre: {book.genre}, "
+                    f"YearPublished: {book.year_published}, "
+                    f"Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, "
+                    f"Status: {book.status}"
+                )
                 books_found = True
 
         if not books_found:
             print("No books found")
 
+
 # Create an instance of the BookManagementSystem class and call the functions
 bms = BookManagementSystem('books.txt')
 while Run:
-    print("1. Add book")
+    print("1. Search book")
     print("2. View books")
-    print("3. Delete book")
-    print("4. Update book")
-    print("5. Exit")
+    print("3. Update book")
+    print("4. Add book")
+    print("5. Delete book")
+    print("6. Exit")
 
     choice = input("Enter your choice: ")
     if choice == "1":
-        bms.add_book()
+        bms.search_books()
     elif choice == "2":
         bms.view_books()
     elif choice == "3":
-        bms.delete_book()
-    elif choice == "4":
         bms.update_book()
+    elif choice == "4":
+        bms.add_book()
     elif choice == "5":
-        print("Goodbye!")
-        break
+        bms.delete_book()
+    elif choice == "6":
+        confirm_exit = input("Are you sure you want to exit the program?(y/n)").lower()
+        if confirm_exit == 'y':
+            break
+        if confirm_exit == 'n':
+            continue
     else:
         print("Invalid choice. Please try again.")
 
@@ -185,4 +223,4 @@ while Run:
 
         if try_again == "n":
             Run = False
-            break
+
