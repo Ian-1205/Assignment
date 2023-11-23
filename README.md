@@ -187,13 +187,6 @@ class BookManagementSystem:
             else:
                 print("Invalid input. Please enter the author using only letters.")
 
-        while True:
-            title = input("Enter book title: ")
-            if title.replace(" ", "").isalpha():
-                break
-            else:
-                print("Invalid input. Please enter the title using only letters.")
-
         books_found = False  # Flag to check if any books match the criteria
 
         for book in self.books:
