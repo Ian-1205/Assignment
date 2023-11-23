@@ -142,7 +142,12 @@ class BookManagementSystem:
                 f"Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, "
                 f"Status: {book.status}"
             )
-        isbn = input("Enter book ISBN to delete: ")
+        while True:
+            isbn = input("Enter book ISBN to delete: ")
+            if len(isbn) == 13 and isbn.isdigit():
+                break  # Exit the loop if the ISBN is valid
+            else:
+                print("Invalid ISBN. ISBN must be exactly 13 digits and consist only of digits.")
         for book in self.books:
             if book.isbn == isbn:
                 self.books.remove(book)
