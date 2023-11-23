@@ -98,6 +98,17 @@ class BookManagementSystem:
 
     # Create a function called update_book that takes in the following parameters:
     def update_book(self):
+        for book in self.books:
+            print(
+                f"ISBN: {book.isbn}, "
+                f"Author: {book.author}, "
+                f"Title: {book.title}, "
+                f"Publisher: {book.publisher}, "
+                f"Genre: {book.genre}, "
+                f"Year Published: {book.year_published}, "
+                f"Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, "
+                f"Status: {book.status}"
+            )
         current_book_name = input("Enter the current name of the book you want to update: ")
         current_book_author = input("Enter the current author of the book you want to update: ")
         for book in self.books:
