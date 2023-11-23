@@ -163,17 +163,6 @@ class BookManagementSystem:
 
     def search_books(self):
         while True:
-            for book in self.books:
-                print(
-                    f"ISBN: {book.isbn}, "
-                    f"Author: {book.author}, "
-                    f"Title: {book.title}, "
-                    f"Publisher: {book.publisher}, "
-                    f"Genre: {book.genre}, "
-                    f"Year Published: {book.year_published}, "
-                    f"Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, "
-                    f"Status: {book.status}"
-                )
             isbn = input("Enter book ISBN: ")
             if len(isbn) == 13 and isbn.isdigit():
                 break  # Exit the loop if the ISBN is valid
