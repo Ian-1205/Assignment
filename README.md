@@ -128,7 +128,7 @@ class BookManagementSystem:
                 self.write_to_file()
                 os.system('cls')
                 return
-        print("Book not found")
+        print("Book not found.")
         os.system('cls')
 
     # Create a function called write_to_file that takes in the following parameters:
@@ -162,8 +162,18 @@ class BookManagementSystem:
     # Create a function to search for books
 
     def search_books(self):
-        isbn = input("Enter book ISBN: ")
-        author = input("Enter book author: ")
+        while True:
+            isbn = input("Enter book ISBN: ")
+            if len(isbn) == 13 and isbn.isdigit():
+                break  # Exit the loop if the ISBN is valid
+            else:
+                print("Invalid ISBN. ISBN must be exactly 13 digits and consist only of digits.")
+        while True:
+            author = input("Enter book author: ")
+            if author.replace(" ", "").isalpha():
+                break
+            else:
+                print("Invalid input. Please enter the author using only letters.")
         title = input("Enter book title: ")
 
         books_found = False  # Flag to check if any books match the criteria
@@ -183,7 +193,7 @@ class BookManagementSystem:
                 books_found = True
 
         if not books_found:
-            print("No books found")
+            print("No books found.")
 
 
 # Create an instance of the BookManagementSystem class and call the functions
@@ -223,4 +233,3 @@ while Run:
 
         if try_again == "n":
             Run = False
-
