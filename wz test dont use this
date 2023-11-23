@@ -98,6 +98,17 @@ class BookManagementSystem:
 
     # Create a function called update_book that takes in the following parameters:
     def update_book(self):
+        for book in self.books:
+            print(
+                f"ISBN: {book.isbn}, "
+                f"Author: {book.author}, "
+                f"Title: {book.title}, "
+                f"Publisher: {book.publisher}, "
+                f"Genre: {book.genre}, "
+                f"Year Published: {book.year_published}, "
+                f"Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, "
+                f"Status: {book.status}"
+            )
         current_book_name = input("Enter the current name of the book you want to update: ")
         current_book_author = input("Enter the current author of the book you want to update: ")
         for book in self.books:
@@ -120,6 +131,17 @@ class BookManagementSystem:
 
     # Create a function called delete_book that takes in the following parameters:
     def delete_book(self):
+        for book in self.books:
+            print(
+                f"ISBN: {book.isbn}, "
+                f"Author: {book.author}, "
+                f"Title: {book.title}, "
+                f"Publisher: {book.publisher}, "
+                f"Genre: {book.genre}, "
+                f"Year Published: {book.year_published}, "
+                f"Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, "
+                f"Status: {book.status}"
+            )
         isbn = input("Enter book ISBN to delete: ")
         for book in self.books:
             if book.isbn == isbn:
@@ -128,7 +150,7 @@ class BookManagementSystem:
                 self.write_to_file()
                 os.system('cls')
                 return
-        print("Book not found")
+        print("Book not found.")
         os.system('cls')
 
     # Create a function called write_to_file that takes in the following parameters:
@@ -162,9 +184,26 @@ class BookManagementSystem:
     # Create a function to search for books
 
     def search_books(self):
-        isbn = input("Enter book ISBN: ")
-        author = input("Enter book author: ")
-        title = input("Enter book title: ")
+        while True:
+            isbn = input("Enter book ISBN: ")
+            if len(isbn) == 13 and isbn.isdigit():
+                break  # Exit the loop if the ISBN is valid
+            else:
+                print("Invalid ISBN. ISBN must be exactly 13 digits and consist only of digits.")
+
+        while True:
+            author = input("Enter book author: ")
+            if author.replace(" ", "").isalpha():
+                break
+            else:
+                print("Invalid input. Please enter the author using only letters.")
+
+        while True:
+            title = input("Enter book title: ")
+            if title.replace(" ", "").isalpha():
+                break
+            else:
+                print("Invalid input. Please enter the title using only letters.")
 
         books_found = False  # Flag to check if any books match the criteria
 
@@ -183,7 +222,7 @@ class BookManagementSystem:
                 books_found = True
 
         if not books_found:
-            print("No books found")
+            print("No books found.")
 
 
 # Create an instance of the BookManagementSystem class and call the functions
@@ -220,6 +259,8 @@ while Run:
 
         while try_again != "n" and try_again != "y":
             try_again = input("Do you wish to try again? (y/n): ").lower()
-
         if try_again == "n":
             Run = False
+
+print("Thank you for using the Book Management System. Goodbye!")
+
