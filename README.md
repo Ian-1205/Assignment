@@ -206,7 +206,7 @@ class BookManagementSystem:
     # Create a function to search for books
 
     def search_books(self):
-        proceed = input("Do you want to continue deleting books? (y/n): ")
+        proceed = input("Do you want to continue searching books? (y/n): ")
         if proceed.lower() == "n":
             os.system('cls')
             return
