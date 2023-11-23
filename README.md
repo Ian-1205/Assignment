@@ -43,7 +43,13 @@ class BookManagementSystem:
         self.read_from_file()
 
     # Create a function called add_book that takes in the following parameters:
-    def add_book(self):
+    def add_book(self): 
+        Proceed = input("Do you want to continue adding books? (y/n): ")
+        if Proceed.lower() == "n":
+            os.system('cls')
+            return
+    
+
         while True:
             isbn = input("Enter book ISBN: ")
             if len(isbn) == 13 and isbn.isdigit():
@@ -77,6 +83,7 @@ class BookManagementSystem:
 
     # Create a function called view_books that takes in the following parameters:
     def view_books(self):
+
         print("Numbers of books:", len(self.books))
         if len(self.books) == 0:
             print("No books found.")
@@ -98,6 +105,12 @@ class BookManagementSystem:
 
     # Create a function called update_book that takes in the following parameters:
     def update_book(self):
+
+        Proceed = input("Do you want to continue updating books? (y/n): ")
+        if Proceed.lower() == "n":
+            os.system('cls')
+            return
+        
         for book in self.books:
             print(
                 f"ISBN: {book.isbn}, "
@@ -131,6 +144,11 @@ class BookManagementSystem:
 
     # Create a function called delete_book that takes in the following parameters:
     def delete_book(self):
+        Proceed = input("Do you want to continue deleting books? (y/n): ")
+        if Proceed.lower() == "n":
+            os.system('cls')
+            return
+        
         for book in self.books:
             print(
                 f"ISBN: {book.isbn}, "
