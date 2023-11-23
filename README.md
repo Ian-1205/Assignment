@@ -42,7 +42,7 @@ class BookManagementSystem:
         self.filename = filename
         self.read_from_file()
 
-    # Create a function called add_book that takes in the following parameters:
+ # Create a function called add_book that takes in the following parameters:
     def add_book(self):
         while True:
             isbn = input("Enter book ISBN: ")
@@ -59,7 +59,7 @@ class BookManagementSystem:
         date_purchased = get_valid_date_input("Enter date purchased (DD-MM-YYYY): ", "%d-%m-%Y")
         status = input("Enter book status: ")
 
-        # Confirmation of the criteria of the user's input
+# Confirmation of the criteria of the user's input
         if isbn.isdigit() and author.isalpha() and genre.isalpha():
             book = Book(isbn, author, title, publisher, genre, year_published, date_purchased, status)
             books_to_add = [book]
@@ -75,7 +75,7 @@ class BookManagementSystem:
     def __len__(self):
         return len(self.books)
 
-    # Create a function called view_books that takes in the following parameters:
+# Create a function called view_books that takes in the following parameters:
     def view_books(self):
         print("Numbers of books:", len(self.books))
         if len(self.books) == 0:
@@ -96,7 +96,7 @@ class BookManagementSystem:
             input("Press Enter to continue...")
             os.system('cls')
 
-    # Create a function called update_book that takes in the following parameters:
+# Create a function called update_book that takes in the following parameters:
     def update_book(self):
         for book in self.books:
             print(
@@ -129,7 +129,7 @@ class BookManagementSystem:
         print("Book not found.")
         os.system('cls')
 
-    # Create a function called delete_book that takes in the following parameters:
+# Create a function called delete_book that takes in the following parameters:
     def delete_book(self):
         isbn = input("Enter book ISBN to delete: ")
         for book in self.books:
@@ -142,7 +142,7 @@ class BookManagementSystem:
         print("Book not found.")
         os.system('cls')
 
-    # Create a function called write_to_file that takes in the following parameters:
+# Create a function called write_to_file that takes in the following parameters:
     def write_to_file(self):
         with open(self.filename, 'w') as f:
             for book in self.books:
@@ -152,7 +152,7 @@ class BookManagementSystem:
                     f"{book.status}\n"
                 )
 
-    # Create a function called read_from_file that takes in the following parameters:
+# Create a function called read_from_file that takes in the following parameters:
     def read_from_file(self):
         self.books = []
         try:
@@ -170,7 +170,7 @@ class BookManagementSystem:
         except FileNotFoundError:
             print("Error: File not found")
 
-    # Create a function to search for books
+# Create a function to search for books
 
     def search_books(self):
         while True:
@@ -179,13 +179,20 @@ class BookManagementSystem:
                 break  # Exit the loop if the ISBN is valid
             else:
                 print("Invalid ISBN. ISBN must be exactly 13 digits and consist only of digits.")
+
         while True:
             author = input("Enter book author: ")
             if author.replace(" ", "").isalpha():
                 break
             else:
                 print("Invalid input. Please enter the author using only letters.")
-        title = input("Enter book title: ")
+
+        while True:
+            title = input("Enter book title: ")
+            if title.replace(" ", "").isalpha():
+                break
+            else:
+                print("Invalid input. Please enter the title using only letters.")
 
         books_found = False  # Flag to check if any books match the criteria
 
@@ -241,6 +248,6 @@ while Run:
 
         while try_again != "n" and try_again != "y":
             try_again = input("Do you wish to try again? (y/n): ").lower()
-
         if try_again == "n":
             Run = False
+
