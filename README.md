@@ -43,12 +43,11 @@ class BookManagementSystem:
         self.read_from_file()
 
     # Create a function called add_book that takes in the following parameters:
-    def add_book(self): 
-        Proceed = input("Do you want to continue adding books? (y/n): ")
-        if Proceed.lower() == "n":
+    def add_book(self):
+        proceed = input("Do you want to continue adding books? (y/n): ")
+        if proceed.lower() == "n":
             os.system('cls')
             return
-    
 
         while True:
             isbn = input("Enter book ISBN: ")
@@ -106,11 +105,11 @@ class BookManagementSystem:
     # Create a function called update_book that takes in the following parameters:
     def update_book(self):
 
-        Proceed = input("Do you want to continue updating books? (y/n): ")
-        if Proceed.lower() == "n":
+        proceed = input("Do you want to continue updating books? (y/n): ")
+        if proceed.lower() == "n":
             os.system('cls')
             return
-        
+
         for book in self.books:
             print(
                 f"ISBN: {book.isbn}, "
@@ -144,11 +143,11 @@ class BookManagementSystem:
 
     # Create a function called delete_book that takes in the following parameters:
     def delete_book(self):
-        Proceed = input("Do you want to continue deleting books? (y/n): ")
-        if Proceed.lower() == "n":
+        proceed = input("Do you want to continue deleting books? (y/n): ")
+        if proceed.lower() == "n":
             os.system('cls')
             return
-        
+
         for book in self.books:
             print(
                 f"ISBN: {book.isbn}, "
@@ -207,6 +206,10 @@ class BookManagementSystem:
     # Create a function to search for books
 
     def search_books(self):
+        proceed = input("Do you want to continue deleting books? (y/n): ")
+        if proceed.lower() == "n":
+            os.system('cls')
+            return
         while True:
             isbn = input("Enter book ISBN: ")
             if len(isbn) == 13 and isbn.isdigit():
@@ -220,7 +223,7 @@ class BookManagementSystem:
                 break
             else:
                 print("Invalid input. Please enter the author using only letters.")
-                
+
         while True:
             title = input("Enter book title: ")
             break
