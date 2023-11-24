@@ -196,25 +196,6 @@ class BookManagementSystem:
                 setattr(book, attribute, new_value)
                 self.write_to_file()
 
-    def write_to_file(self):
-        with open(self.filename, 'w') as f:
-            for book in self.books:
-                f.write(
-                    f"{book.isbn},{book.author},{book.title},{book.publisher},"
-                    f"{book.genre},{book.year_published},{book.date_purchased.strftime('%d-%m-%Y')},"
-                    f"{book.status}\n"
-                )
-
-    def get_valid_date_input(self, prompt, format_str):
-        while True:
-            date_str = input(prompt)
-            try:
-                date_obj = datetime.datetime.strptime(date_str, format_str)
-                return date_obj
-            except ValueError:
-                print(f"Invalid date format. Please enter the date in the format: {format_str}")
-
-
     # Create a function called delete_book that takes in the following parameters:
     def delete_book(self):
         proceed = input("Do you want to continue deleting books? (y/n): ")
