@@ -116,26 +116,36 @@ class BookManagementSystem:
             print("No books found.")
             return
 
-        update_choices = {
-            "1": "author",
-            "2": "title",
-            "3": "publisher",
-            "4": "genre",
-            "5": "year_published",
-            "6": "date_purchased",
-            "7": "status",
-        }
+        while True:
+            update_choices = {
+                "1": "author",
+                "2": "title",
+                "3": "publisher",
+                "4": "genre",
+                "5": "year_published",
+                "6": "date_purchased",
+                "7": "status",
+                "8": "Back to Menu",  # Added option to exit to menu
+            }
 
-        update_choice = input("Enter the choice that you want to update: ")
-        if update_choice in update_choices:
-            attribute = update_choices[update_choice]
-            new_value = self.get_valid_input(attribute)
-            self.update_book_attribute(isbn, attribute, new_value)
-            print(f"Book {attribute} updated successfully.")
-        else:
-            print("Invalid choice. Please try again.")
+            print("Select the attribute to update:")
+            for key, value in update_choices.items():
+                print(f"{key}. {value}")
 
-        os.system('cls')
+            update_choice = input("Enter your choice: ")
+            if update_choice in update_choices:
+                if update_choice == "8":
+                    break  # Exit the loop if the user chooses to finish updating
+                attribute = update_choices[update_choice]
+                new_value = self.get_valid_input(attribute)
+                self.update_book_attribute(isbn, attribute, new_value)
+                print(f"Book {attribute} updated successfully.")
+            else:
+                print("Invalid choice. Please try again.")
+                break
+
+        os.system('cls')  # Move this line outside of the while loop
+        return
 
     def get_valid_isbn_input(self):
         while True:
@@ -195,6 +205,24 @@ class BookManagementSystem:
             if isbn == book.isbn:
                 setattr(book, attribute, new_value)
                 self.write_to_file()
+
+    def write_to_file(self):
+        with open(self.filename, 'w') as f:
+            for book in self.books:
+                f.write(
+                    f"{book.isbn},{book.author},{book.title},{book.publisher},"
+                    f"{book.genre},{book.year_published},{book.date_purchased.strftime('%d-%m-%Y')},"
+                    f"{book.status}\n"
+                )
+
+    def get_valid_date_input(self, prompt, format_str):
+        while True:
+            date_str = input(prompt)
+            try:
+                date_obj = datetime.datetime.strptime(date_str, format_str)
+                return date_obj
+            except ValueError:
+                print(f"Invalid date format. Please enter the date in the format: {format_str}")
 
     # Create a function called delete_book that takes in the following parameters:
     def delete_book(self):
@@ -259,7 +287,6 @@ class BookManagementSystem:
             print("Error: File not found")
 
     # Create a function to search for books
-
     def search_books(self):
         proceed = input("Do you want to continue searching books? (y/n): ")
         if proceed.lower() == "n":
