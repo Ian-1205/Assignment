@@ -44,6 +44,11 @@ class BookManagementSystem:
 
     # Create a function called add_book that takes in the following parameters:
     def add_book(self):
+        proceed = input("Do you want to continue adding books? (y/n): ")
+        if proceed.lower() == "n":
+            os.system('cls')
+            return
+
         while True:
             isbn = input("Enter book ISBN: ")
             if len(isbn) == 13 and isbn.isdigit():
@@ -77,6 +82,7 @@ class BookManagementSystem:
 
     # Create a function called view_books that takes in the following parameters:
     def view_books(self):
+
         print("Numbers of books:", len(self.books))
         if len(self.books) == 0:
             print("No books found.")
@@ -98,39 +104,141 @@ class BookManagementSystem:
 
     # Create a function called update_book that takes in the following parameters:
     def update_book(self):
+
+        proceed = input("Do you want to continue updating books? (y/n): ")
+        if proceed.lower() == "n":
+            os.system('cls')
+            return
+
+        while True:
+            isbn = input("Enter book ISBN: ")
+            if len(isbn) == 13 and isbn.isdigit():
+                break  # Exit the loop if the ISBN is valid
+            else:
+                print("Invalid ISBN. ISBN must be exactly 13 digits and consist only of digits.")
+
+        books_found = False
+
         for book in self.books:
-            print(
-                f"ISBN: {book.isbn}, "
-                f"Author: {book.author}, "
-                f"Title: {book.title}, "
-                f"Publisher: {book.publisher}, "
-                f"Genre: {book.genre}, "
-                f"Year Published: {book.year_published}, "
-                f"Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, "
-                f"Status: {book.status}"
-            )
-        current_book_name = input("Enter the current name of the book you want to update: ")
-        current_book_author = input("Enter the current author of the book you want to update: ")
-        for book in self.books:
-            if book.title == current_book_name and book.author == current_book_author:
-                new_book_name = input("Enter the new name of the book: ")
-                while True:
-                    new_book_author = input("Enter the new author of the book: ")
-                    if new_book_author.replace(" ", "").isalpha():
-                        break
-                    else:
-                        print("Invalid input. Please enter the author using only letters.")
-                book.title = new_book_name
-                book.author = new_book_author
-                print("Book updated successfully.")
-                self.write_to_file()
-                os.system('cls')
-                return
-        print("Book not found.")
-        os.system('cls')
+            if isbn == book.isbn:
+                print(
+                    f'ISBN: {book.isbn}, '
+                    f'Author: {book.author}, '
+                    f'Title: {book.title}, '
+                    f'Publisher: {book.publisher}, '
+                    f'Genre: {book.genre}, '
+                    f'Year Published: {book.year_published}, '
+                    f'Date Purchased: {book.date_purchased.strftime("%d-%m-%Y")}, '
+                    f'Status: {book.status}'
+                )
+                books_found = True
+        if not books_found:
+            print("No books found.")
+
+        print("1.Author Name")
+        print("2.Book Title")
+        print("3.Publisher")
+        print("4.Genre")
+        print("5.Year Published")
+        print("6.Date Purchased")
+        print("7.Status")
+        update_choice = input("Enter the choice that you want to update:")
+
+        if update_choice == "1":
+            while True:
+                new_book_author = input("Enter the new author name of the book: ")
+                if new_book_author.replace(" ", "").isalpha():
+                    for book in self.books:
+                        if isbn == book.isbn:
+                            book.author = new_book_author
+                            print("Author name updated successfully.")
+                            self.write_to_file()
+                            os.system('cls')
+                            return  # exit the loop after updating the author
+                else:
+                    print("Invalid input. Please enter the author using only letters.")
+
+        elif update_choice == "2":
+            while True:
+                new_book_name = input("Enter the new title name of the book: ")
+                for book in self.books:
+                    if isbn == book.isbn:
+                        book.title = new_book_name
+                        print("Book title name updated successfully")
+                        self.write_to_file()
+                        os.system('cls')
+                        return  # exit the loop after updating the author
+        elif update_choice == "3":
+            while True:
+                new_publisher = input("Enter the new publisher of the book: ")
+                for book in self.books:
+                    if isbn == book.isbn:
+                        book.publisher = new_publisher
+                        print("Book publisher updated successfully")
+                        self.write_to_file()
+                        os.system('cls')
+                        return  # exit the loop after updating the author
+        elif update_choice == "4":
+            while True:
+                new_genre = input("Enter the new genre of the book: ")
+                if new_genre.replace(" ", "").isalpha():
+                    for book in self.books:
+                        if isbn == book.isbn:
+                            book.genre = new_genre
+                            print("Book genre updated successfully")
+                            self.write_to_file()
+                            os.system('cls')
+                            return  # exit the loop after updating the author
+                else:
+                    print("Invalid input. Please enter the genre using only letters.")
+        elif update_choice == "5":
+            while True:
+                new_year_published = input("Enter the new year published of the book: ")
+                if new_year_published.replace(" ", "").isdigit():
+                    for book in self.books:
+                        if isbn == book.isbn:
+                            book.year_published = new_year_published
+                            print("Book published updated successfully")
+                            self.write_to_file()
+                            os.system('cls')
+                            return  # exit the loop after updating the author
+                else:
+                    print("Invalid input. Please enter the author using only number.")
+        elif update_choice == "6":
+            while True:
+                new_date_purchased = get_valid_date_input("Enter date purchased (DD-MM-YYYY): ", "%d-%m-%Y")
+                for book in self.books:
+                    if isbn == book.isbn:
+                        book.date_purchased = new_date_purchased
+                        print("Book date purchased updated successfully")
+                        self.write_to_file()
+                        os.system('cls')
+                        return  # exit the loop after updating the author
+        elif update_choice == "7":
+            while True:
+                new_status = input("Enter the new status of the book: ")
+                if all(c.isalpha() or c == '-' for c in new_status):
+                    for book in self.books:
+                        if isbn == book.isbn:
+                            book.status = new_status
+                            print("Book status updated successfully")
+                            self.write_to_file()
+                            os.system('cls')
+                            return  # exit the loop after updating the author
+                else:
+                    print("Invalid input. Please enter the genre using only letters and hyphens.")
+        else:
+            print("Invalid choice. Please try again.")
+
+    os.system('cls')
 
     # Create a function called delete_book that takes in the following parameters:
     def delete_book(self):
+        proceed = input("Do you want to continue deleting books? (y/n): ")
+        if proceed.lower() == "n":
+            os.system('cls')
+            return
+
         for book in self.books:
             print(
                 f"ISBN: {book.isbn}, "
@@ -142,7 +250,12 @@ class BookManagementSystem:
                 f"Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, "
                 f"Status: {book.status}"
             )
-        isbn = input("Enter book ISBN to delete: ")
+        while True:
+            isbn = input("Enter book ISBN to delete: ")
+            if len(isbn) == 13 and isbn.isdigit():
+                break  # Exit the loop if the ISBN is valid
+            else:
+                print("Invalid ISBN. ISBN must be exactly 13 digits and consist only of digits.")
         for book in self.books:
             if book.isbn == isbn:
                 self.books.remove(book)
@@ -184,6 +297,10 @@ class BookManagementSystem:
     # Create a function to search for books
 
     def search_books(self):
+        proceed = input("Do you want to continue searching books? (y/n): ")
+        if proceed.lower() == "n":
+            os.system('cls')
+            return
         while True:
             isbn = input("Enter book ISBN: ")
             if len(isbn) == 13 and isbn.isdigit():
@@ -200,10 +317,7 @@ class BookManagementSystem:
 
         while True:
             title = input("Enter book title: ")
-            if title.replace(" ", "").isalpha():
-                break
-            else:
-                print("Invalid input. Please enter the title using only letters.")
+            break
 
         books_found = False  # Flag to check if any books match the criteria
 
@@ -263,4 +377,5 @@ while Run:
             Run = False
 
 print("Thank you for using the Book Management System. Goodbye!")
+
 
