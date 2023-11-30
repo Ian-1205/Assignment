@@ -6,22 +6,34 @@ import datetime
 import os
 
 
-# Create a function to get the write date format of the user's input
+# Create a function to get the write year format of the user's input
+def get_valid_year_input(prompt):
+    while True:
+        user_input = input(prompt)
+        try:
+            year = int(user_input)
+            if 1000 <= year <= 9999:  # Ensure the year is a 4-digit number
+                return year
+            else:
+                print("Invalid input. Please enter a valid 4-digit year (YYYY).")
+        except ValueError:
+            print("Invalid input. Please enter a valid year (YYYY).")
+
+
 def get_valid_date_input(prompt, format_str):
     while True:
         user_input = input(prompt)
         try:
-            date_obj = datetime.datetime.strptime(user_input, format_str)
-            return date_obj
+            date = datetime.datetime.strptime(user_input, format_str)
+            return date
         except ValueError:
-            print("Invalid input. Please enter the date in the specified format.")
-
-
-Run = True
+            print("Invalid input. Please enter a valid date.")
 
 
 # Create a Book class with the following attributes:
+
 class Book:
+
     def __init__(self, isbn, title, author, publisher, genre, year_published, date_purchased, status):
         self.title = title
         self.author = author
@@ -42,6 +54,10 @@ class BookManagementSystem:
         self.filename = filename
         self.read_from_file()
 
+    @staticmethod
+    def validate_alpha_with_spaces(value):
+        return all(c.isalpha() or c.isspace() for c in value)
+
     # Create a function called add_book that takes in the following parameters:
     def add_book(self):
         proceed = input("Do you want to continue adding books? (y/n): ")
@@ -60,12 +76,12 @@ class BookManagementSystem:
         title = input("Enter book title: ")
         publisher = input("Enter book publisher: ")
         genre = input("Enter book genre: ")
-        year_published = get_valid_date_input("Enter year published (DD-MM-YYYY): ", "%d-%m-%Y")
+        year_published = get_valid_year_input("Enter year published (YYYY): ")
         date_purchased = get_valid_date_input("Enter date purchased (DD-MM-YYYY): ", "%d-%m-%Y")
         status = input("Enter book status: ")
 
         # Confirmation of the criteria of the user's input
-        if isbn.isdigit() and author.isalpha() and genre.isalpha():
+        if self.validate_alpha_with_spaces(author) and self.validate_alpha_with_spaces(genre):
             book = Book(isbn, author, title, publisher, genre, year_published, date_purchased, status)
             books_to_add = [book]
             self.books.extend(books_to_add)
@@ -144,10 +160,11 @@ class BookManagementSystem:
                 print("Invalid choice. Please try again.")
                 break
 
-        os.system('cls')  # Move this line outside of the while loop
+        os.system('cls')
         return
 
-    def get_valid_isbn_input(self):
+    @staticmethod
+    def get_valid_isbn_input():
         while True:
             isbn = input("Enter book ISBN: ")
             if len(isbn) == 13 and isbn.isdigit():
@@ -181,13 +198,16 @@ class BookManagementSystem:
             else:
                 print(f"Invalid input. Please enter a valid {attribute}.")
 
-    def validate_author(self, value):
+    @staticmethod
+    def validate_author(value):
         return value.replace(" ", "").isalpha()
 
-    def validate_genre(self, value):
+    @staticmethod
+    def validate_genre(value):
         return value.replace(" ", "").isalpha()
 
-    def validate_year_published(self, value):
+    @staticmethod
+    def validate_year_published(value):
         return value.replace(" ", "").isdigit()
 
     def validate_date_purchased(self, value):
@@ -197,7 +217,8 @@ class BookManagementSystem:
         except ValueError:
             return False
 
-    def validate_status(self, value):
+    @staticmethod
+    def validate_status(value):
         return all(c.isalpha() or c == '-' for c in value)
 
     def update_book_attribute(self, isbn, attribute, new_value):
@@ -206,16 +227,8 @@ class BookManagementSystem:
                 setattr(book, attribute, new_value)
                 self.write_to_file()
 
-    def write_to_file(self):
-        with open(self.filename, 'w') as f:
-            for book in self.books:
-                f.write(
-                    f"{book.isbn},{book.author},{book.title},{book.publisher},"
-                    f"{book.genre},{book.year_published},{book.date_purchased.strftime('%d-%m-%Y')},"
-                    f"{book.status}\n"
-                )
-
-    def get_valid_date_input(self, prompt, format_str):
+    @staticmethod
+    def get_valid_date_input(prompt, format_str):
         while True:
             date_str = input(prompt)
             try:
@@ -332,7 +345,7 @@ class BookManagementSystem:
 
 # Create an instance of the BookManagementSystem class and call the functions
 bms = BookManagementSystem('books.txt')
-while Run:
+while True:
     print("1. Search book")
     print("2. View books")
     print("3. Update book")
@@ -365,6 +378,6 @@ while Run:
         while try_again != "n" and try_again != "y":
             try_again = input("Do you wish to try again? (y/n): ").lower()
         if try_again == "n":
-            Run = False
+            break
 
 print("Thank you for using the Book Management System. Goodbye!")
