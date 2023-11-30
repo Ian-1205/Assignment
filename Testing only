@@ -203,6 +203,14 @@ class BookManagementSystem:
         return value.replace(" ", "").isalpha()
 
     @staticmethod
+    def validate_title(value):
+        return str(value.replace(" ", ""))
+    
+    @staticmethod
+    def validate_publisher(value):
+        return str(value.replace(" ", ""))
+
+    @staticmethod
     def validate_genre(value):
         return value.replace(" ", "").isalpha()
 
@@ -302,15 +310,15 @@ class BookManagementSystem:
     # Create a function to search for books
     def search_books(self):
         proceed = input("Do you want to continue searching books? (y/n): ")
-        if proceed.lower() == "n":
+        if proceed.lower() == "y":
             os.system('cls')
-            return
-        while True:
-            isbn = input("Enter book ISBN: ")
-            if len(isbn) == 13 and isbn.isdigit():
-                break  # Exit the loop if the ISBN is valid
-            else:
-                print("Invalid ISBN. ISBN must be exactly 13 digits and consist only of digits.")
+
+            while True:
+                isbn = input("Enter book ISBN: ")
+                if len(isbn) == 13 and isbn.isdigit():
+                    break  # Exit the loop if the ISBN is valid
+                else:
+                    print("Invalid ISBN. ISBN must be exactly 13 digits and consist only of digits.")
 
         while True:
             author = input("Enter book author: ")
