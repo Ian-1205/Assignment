@@ -402,6 +402,7 @@ while True:
         try_again = input("Do you wish to try again? (y/n): ").lower()
 
         while try_again != "n" and try_again != "y":
+            print("\033[91m Invalid choice. Please try again.\033[0m")
             try_again = input("Do you wish to try again? (y/n): ").lower()
         if try_again == "n":
             break
