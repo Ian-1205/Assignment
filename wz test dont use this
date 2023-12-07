@@ -350,7 +350,7 @@ class BookManagementSystem:
                 books_found = False  # Flag to check if any books match the criteria
 
                 for book in self.books:
-                    if book.isbn == isbn or (book.author == author and book.title == title):
+                    if book.isbn == isbn and book.author == author and book.title == title:
                         print(
                             f"ISBN: \033[93m{book.isbn}\033[0m, "
                             f"Author: \033[93m{book.author}\033[0m, "
