@@ -142,13 +142,13 @@ class BookManagementSystem:
 
             while True:
                 update_choices = {
-                    "1": "author",
-                    "2": "title",
-                    "3": "publisher",
-                    "4": "genre",
-                    "5": "year_published",
-                    "6": "date_purchased",
-                    "7": "status",
+                    "1": "Author",
+                    "2": "Title",
+                    "3": "Publisher",
+                    "4": "Genre",
+                    "5": "Year_published",
+                    "6": "Date_purchased",
+                    "7": "Status",
                     "8": "Back to Menu",  # Added option to exit to the menu
                 }
 
