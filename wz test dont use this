@@ -61,7 +61,7 @@ class BookManagementSystem:
     # Create a function called add_book that takes in the following parameters:
     def add_book(self):
         while True:
-            proceed = input("Do you want to continue adding books? (y/n): ")
+            proceed = input("Do you want to continue adding books? (\033[92my\033[0m/\033[91mn\033[0m): ")
             if proceed.lower() == "n":
                 os.system('cls')
                 return
@@ -125,13 +125,13 @@ class BookManagementSystem:
     # Create a function called update_book that takes in the following parameters:
     def update_book(self):
         while True:
-            proceed = input("Do you want to continue updating books? (y/n): ")
-            if proceed.lower() == "n":
+            proceed = input("Do you want to continue updating books? (\033[92my\033[0m/\033[91m\033[0m): ").lower()
+            if proceed == "n":
                 os.system('cls')
                 return
-            elif proceed.lower() != "y":
+            elif proceed != "y":
                 print("\033[91m Invalid input. Please enter 'y' or 'n'.\033[0m")
-                continue  # Continue to the next iteration of the loop if the input is not 'y'
+                continue
 
             isbn = self.get_valid_isbn_input()
             books_found = self.display_book_info(isbn)
@@ -146,10 +146,10 @@ class BookManagementSystem:
                     "2": "Title",
                     "3": "Publisher",
                     "4": "Genre",
-                    "5": "Year_published",
-                    "6": "Date_purchased",
+                    "5": "Year Published",
+                    "6": "Date Purchased",
                     "7": "Status",
-                    "8": "Back to Menu",  # Added option to exit to the menu
+                    "8": "Back to Menu",
                 }
 
                 print("Select the attribute to update:")
@@ -160,10 +160,10 @@ class BookManagementSystem:
                 if update_choice in update_choices:
                     if update_choice == "8":
                         os.system('cls')
-                        return  # Exit the update_book function and go back to the menu
+                        return
                     attribute = update_choices[update_choice]
-                    new_value = self.get_valid_input(attribute)
-                    self.update_book_attribute(isbn, attribute, new_value)
+                    new_value = self.get_valid_input(attribute.lower())
+                    self.update_book_attribute(isbn, attribute.lower(), new_value)
                     print(f"\033[92m Book {attribute} updated successfully.\033[0m")
                 else:
                     print("\033[91m Invalid choice. Please try again.\033[0m")
@@ -255,7 +255,7 @@ class BookManagementSystem:
 
     def delete_book(self):
         while True:
-            proceed = input("Do you want to continue deleting books? (y/n): ")
+            proceed = input("Do you want to continue deleting books? (\033[92my\033[0m/\033[91m\033[0m): ")
             if proceed.lower() == "n":
                 os.system('cls')
                 return
@@ -265,14 +265,14 @@ class BookManagementSystem:
 
             for book in self.books:
                 print(
-                    f"ISBN: {book.isbn}, "
-                    f"Author: {book.author}, "
-                    f"Title: {book.title}, "
-                    f"Publisher: {book.publisher}, "
-                    f"Genre: {book.genre}, "
-                    f"Year Published: {book.year_published}, "
-                    f"Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, "
-                    f"Status: {book.status}"
+                    f"ISBN: \033[93m{book.isbn}\033[0m, "
+                    f"Author: \033[93m{book.author}\033[0m, "
+                    f"Title: \033[93m{book.title}\033[0m, "
+                    f"Publisher: \033[93m{book.publisher}\033[0m, "
+                    f"Genre: \033[93m{book.genre}\033[0m, "
+                    f"Year Published: \033[93m{book.year_published}\033[0m, "
+                    f"Date Purchased: \033[93m{book.date_purchased.strftime('%d-%m-%Y')}\033[0m, "
+                    f"Status: \033[93m{book.status}\033[0m"
                 )
 
             while True:
@@ -324,7 +324,7 @@ class BookManagementSystem:
     # Create a function to search for books
     def search_books(self):
         while True:
-            proceed = str(input("Do you want to continue searching books? (y/n):"))
+            proceed = str(input("Do you want to continue searching books? (\033[92my\033[0m/\03391mn\033[0m):"))
             if proceed.lower() == "n":
                 break
             elif proceed.lower() == "y":
@@ -350,7 +350,11 @@ class BookManagementSystem:
                 books_found = False  # Flag to check if any books match the criteria
 
                 for book in self.books:
-                    if book.isbn == isbn and book.author == author and book.title == title:
+                    isbn_match = not isbn or book.isbn == isbn
+                    author_match = not author or book.author.lower() == author.lower()
+                    title_match = not title or book.title.lower() == title.lower()
+
+                    if isbn_match and author_match and title_match:
                         print(
                             f"ISBN: \033[93m{book.isbn}\033[0m, "
                             f"Author: \033[93m{book.author}\033[0m, "
@@ -391,7 +395,7 @@ while True:
     elif choice == "5":
         bms.delete_book()
     elif choice == "6":
-        confirm_exit = input("Are you sure you want to exit the program?(y/n)").lower()
+        confirm_exit = input("Are you sure you want to exit the program?(\033[92my\033[0m/\033[91mn\033[0m)").lower()
         if confirm_exit == 'y':
             break
         if confirm_exit == 'n':
@@ -399,11 +403,12 @@ while True:
     else:
         print("\033[91m Invalid choice. Please try again.\033[0m")
 
-        try_again = input("Do you wish to try again? (y/n): ").lower()
+        try_again = input("Do you wish to try again? (\033[92my\033[0m/\033[91mn\033[0m): ").lower()
 
         while try_again != "n" and try_again != "y":
             print("\033[91m Invalid choice. Please try again.\033[0m")
-            try_again = input("Do you wish to try again? (y/n): ").lower()
+            try_again = input("Do you wish to try again? (\033[92my\033[0m/\033[91mn\033[0m): ").lower()
         if try_again == "n":
             break
 print("\033[95mThank you for using the Book Management System. Goodbye!\033[0m")
+
