@@ -142,13 +142,13 @@ class BookManagementSystem:
 
             while True:
                 update_choices = {
-                    "1": "author",
-                    "2": "title",
-                    "3": "publisher",
-                    "4": "genre",
-                    "5": "year_published",
-                    "6": "date_purchased",
-                    "7": "status",
+                    "1": "Author",
+                    "2": "Title",
+                    "3": "Publisher",
+                    "4": "Genre",
+                    "5": "Year_published",
+                    "6": "Date_purchased",
+                    "7": "Status",
                     "8": "Back to Menu",  # Added option to exit to the menu
                 }
 
@@ -352,14 +352,14 @@ class BookManagementSystem:
                 for book in self.books:
                     if book.isbn == isbn or (book.author == author and book.title == title):
                         print(
-                            f"\033[93mISBN: {book.isbn}, "
-                            f"Author: {book.author}, "
-                            f"Title: {book.title}, "
-                            f"Publisher: {book.publisher}, "
-                            f"Genre: {book.genre}, "
-                            f"YearPublished: {book.year_published}, "
-                            f"Date Purchased: {book.date_purchased.strftime('%d-%m-%Y')}, "
-                            f"Status: {book.status}\033[0m"
+                            f"ISBN: \033[93m{book.isbn}\033[0m, "
+                            f"Author: \033[93m{book.author}\033[0m, "
+                            f"Title: \033[93m{book.title}\033[0m, "
+                            f"Publisher: \033[93m{book.publisher}\033[0m, "
+                            f"Genre: \033[93m{book.genre}\033[0m, "
+                            f"Year Published: \033[93m{book.year_published}\033[0m, "
+                            f"Date Purchased: \033[93m{book.date_purchased.strftime('%d-%m-%Y')}\033[0m, "
+                            f"Status: \033[93m{book.status}\033[0m"
                         )
                         books_found = True
 
