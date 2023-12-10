@@ -128,6 +128,8 @@ class BookManagementSystem:
             input("Press Enter to continue...")
             os.system('cls')
             
+
+    # Create a function called add_book that takes in the following parameters:
     def update_book(self):
         while True:
             proceed = input("Do you want to continue updating books? (\033[92my\033[0m/\033[91mn\033[0m): ").lower()
@@ -162,21 +164,19 @@ class BookManagementSystem:
                     print(f"\033[94m{key}. {value}\033[0m")
 
                 update_choice = input("Enter your choice: ")
-                if update_choice in update_choices:
-                    if update_choice == "8":
-                        os.system('cls')
-                        return
+                if update_choice == "8":
+                    os.system('cls')
+                    return
+                elif update_choice in update_choices:
                     attribute = update_choices[update_choice]
                     new_value = self.get_valid_input(attribute)
                     self.update_book_attribute(isbn, attribute, new_value)
                     print(f"\033[92m Book {attribute} updated successfully.\033[0m")
+                    break  # Break out of the inner loop after a successful update
                 else:
                     print("\033[91m Invalid choice. Please try again.\033[0m")
-                    break
 
-            os.system('cls')
 
-    # Create a function called add_book that takes in the following parameters:
     def add_book(self):
         while True:
             proceed = input("Do you want to continue adding books? (\033[92my\033[0m/\033[91mn\033[0m): ")
@@ -299,7 +299,7 @@ class BookManagementSystem:
             else:
                 print(f"\033[91mInvalid input. Please enter a valid {attribute.replace('_', ' ')}.\033[0m")
                 continue
-
+        
 
     @staticmethod
     def validate_author(value):
@@ -335,8 +335,8 @@ class BookManagementSystem:
 
     def update_book_attribute(self, isbn, attribute, new_value):
         for book in self.books:
-            new_value = new_value.replace(" ", "")
             if isbn == book.isbn:
+                new_value = new_value.replace(" ", "")
                 if attribute == "Date Purchased":
                     # Convert new_value to a datetime object
                     new_date = self.get_valid_date_input("Dummy prompt", "%d-%m-%Y", date_str=new_value)
@@ -345,28 +345,12 @@ class BookManagementSystem:
                 elif attribute == "Year Published":
                     book.year_published = new_value  # Directly modify the year_published attribute
                     self.write_to_file()  # Call write_to_file on the instance
-                elif attribute == "Author":
-                    new_author = self.get_valid_input("Author")
-                    book.author = new_author  # Directly modify the attribute
-                    setattr(book, attribute, new_value)
-                elif attribute == "Title":
-                    new_title = self.get_valid_input("Title")
-                    book.title = new_title
-                    setattr(book, attribute, new_value)
-                elif attribute == "Publisher":
-                    new_publisher = self.get_valid_input("Publisher")
-                    book.publisher = new_publisher
-                    setattr(book, attribute, new_value)
-                elif attribute == "Genre":
-                    new_genre = self.get_valid_input("Genre")
-                    book.genre = new_genre
-                    setattr(book, attribute, new_value)
-                elif attribute == "Status":
-                    new_status = self.get_valid_input("Status")
-                    book.status = new_status
-                    setattr(book, attribute, new_value)
+                else:
+                    new_attributes = self.get_valid_input(attribute)
+                    setattr(book, attribute, new_attributes)  # Directly modify the attribute
                 self.write_to_file()
                 return
+
 
 
     @staticmethod
