@@ -292,20 +292,12 @@ class BookManagementSystem:
         while True:
             new_value = input(f"Enter the new {attribute} of the book: ")
             validation_function = getattr(self, f"validate_{attribute.replace(' ', '_')}")
-
-            if attribute.lower() == 'date_purchased':
-                format_str = "%d-%m-%Y"
-                if self.validate_date_purchased(new_value, format_str):
-                    return new_value
         
-                if validation_function(new_value):
-                    return new_value
-                else:
-                    print(f"\033[91mInvalid input. Please enter a valid {attribute}.\033[0m")
-            elif validation_function(new_value):
+            if validation_function(new_value):
                 return new_value
             else:
-                print(f"\033[91mInvalid input. Please enter a valid {attribute}.\033[0m")        
+                print(f"\033[91mInvalid input. Please enter a valid {attribute}.\033[0m")
+                continue
 
     @staticmethod
     def validate_author(value):
@@ -328,8 +320,9 @@ class BookManagementSystem:
         return value.replace(" ", "").isdigit()
 
     def validate_date_purchased(self, value):
+        format_str = "%d-%m-%Y"
         try:
-            self.get_valid_date_input(value, "%d-%m-%Y")
+            self.get_valid_date_input("Dummy prompt", format_str, date_str=value)
             return True
         except ValueError:
             return False
@@ -341,7 +334,10 @@ class BookManagementSystem:
     def update_book_attribute(self, isbn, attribute, new_value):
         for book in self.books:
             if isbn == book.isbn:
-                setattr(book, attribute, new_value)
+                if attribute == "date_purchased":
+                    setattr(book, attribute, new_value.strftime("%d-%m-%Y"))
+                else:
+                    setattr(book, attribute, new_value)
                 self.write_to_file()
 
     @staticmethod
