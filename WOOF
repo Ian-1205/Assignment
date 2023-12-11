@@ -214,7 +214,12 @@ class BookManagementSystem:
 
     @staticmethod
     def validate_year_published(value):
-        return value.replace(" ", "").isdigit()
+        try:
+            year = int(value)
+            current_year = datetime.datetime.now().year
+            return 1000 <= year <= 9999 and year <= current_year
+        except ValueError:
+            return False
 
     def validate_date_purchased(self, value):
         try:
