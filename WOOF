@@ -236,8 +236,8 @@ class BookManagementSystem:
         for book in self.books:
             if isbn == book.isbn:
                 if attribute == 'date_purchased':
-                    # Convert new_value to datetime object
-                    new_date_purchased = datetime.datetime.strptime(new_value, "%d-%m-%Y")
+                    # Use get_valid_date_input to ensure the correct date format
+                    new_date_purchased = self.get_valid_date_input(new_value, "%d-%m-%Y")
                     setattr(book, attribute, new_date_purchased)
                 else:
                     setattr(book, attribute, new_value)
@@ -414,4 +414,5 @@ while True:
             try_again = input("\033[1mDo you wish to try again? (\033[1;92my\033[0m/\033[1;91mn\033[0m): \033[0m").lower()
         if try_again == "n":
             break
-print('\033[95mThank you for using the Book Management System. Goodbye!\033[0m')
+
+        print('\033[95mThank you for using the Book Management System. Goodbye!\033[0m')
